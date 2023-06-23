@@ -92,13 +92,28 @@ class BinarySearchTree {
 
     return result;
   }
+  // depth first search
+  // pre order
+  depthFirstSearchPreOrder() {
+    const result = [];
+    const node = this.root;
+
+    function traverse(node) {
+      result.push(node.value);
+      if (node.left) traverse(node.left);
+      if (node.right) traverse(node.right);
+    }
+
+    traverse(node);
+    return result;
+  }
 }
 
 const tree = new BinarySearchTree();
-tree.root = new Node(10);
+tree.insert(10);
 tree.insert(5);
 tree.insert(11);
 tree.insert(6);
 tree.insert(9);
 tree.insert(13);
-console.info(tree.breadthFirstSearch());
+console.info(tree.depthFirstSearchPreOrder());
