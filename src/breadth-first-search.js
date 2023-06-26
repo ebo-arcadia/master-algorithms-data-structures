@@ -107,13 +107,30 @@ class BinarySearchTree {
     traverse(node);
     return result;
   }
+
+  //depth first search
+  //post order
+  depthFirstSearchPostOrder() {
+    const result = [];
+    const node = this.root;
+
+    function traverse(node) {
+      if (node.left) traverse(node.left);
+      if (node.right) traverse(node.right);
+      result.push(node.value);
+    }
+
+    traverse(node);
+    return result;
+  }
 }
 
 const tree = new BinarySearchTree();
 tree.insert(10);
-tree.insert(5);
-tree.insert(11);
 tree.insert(6);
-tree.insert(9);
-tree.insert(13);
+tree.insert(15);
+tree.insert(3);
+tree.insert(8);
+tree.insert(20);
 console.info(tree.depthFirstSearchPreOrder());
+console.info(tree.depthFirstSearchPostOrder());
