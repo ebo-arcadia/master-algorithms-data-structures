@@ -26,33 +26,48 @@ class MaxBinaryHeap {
 
   extractMax() {
     const maxToExtract = this.values[0];
-    const childIndex = this.values.length - 1;
-    this.values[0] = this.values[childIndex];
-
-    let parentIndex = 0;
-    let parentValue = this.values[parentIndex];
-
-    while (parentValue <= leftChildIndex || parentValue <= rightChildValue) {
-      let leftChildIndex = Math.floor(2 * parentIndex + 1);
-      let rightChildIndex = Math.floor(2 * parentIndex + 2);
-      let leftChildValue = this.values[leftChildIndex];
-      let rightChildValue = this.values[rightChildIndex];
-
-      if (parentIndex <= leftChildIndex && parentIndex <= rightChildIndex)
-        break;
-
-      if (leftChildIndex > rightChildIndex) {
-        this.values[parentIndex] = this.values[leftChildIndex];
-        parentIndex = leftChildIndex;
-      }
-
-      if (leftChildIndex < rightChildIndex) {
-        this.values[parentIndex] = this.values[rightChildIndex];
-        parentIndex = rightChildIndex;
-      }
+    const lastElementIndex = this.values.length - 1;
+    const last = this.values[lastElementIndex];
+    if (this.values.length > 0) {
+      this.values[0] = last;
+      this.sinkDown();
     }
-
     return maxToExtract;
+  }
+
+  sinkDown() {
+    let parentIndex = 0;
+    let length = this.values.length;
+    let parentValue = this.values[0];
+
+    while (true) {
+      let leftChildIndx = 2 * parentIndex + 1;
+      let rightChildIndx = 2 * parentIndex + 2;
+      let leftChildValue, rightChildValue;
+      let swapIndx = null;
+
+      if (leftChildIndx < length) {
+        leftChildValue = this.values[leftChildIndx];
+        if (leftChildValue > parentValue) {
+          swapIndx = leftChildIndx;
+        }
+      }
+
+      if (rightChildIndx < length) {
+        rightChildValue = this.values[rightChildIndx];
+        if (
+          (swapIndx === null && rightChildValue > parentValue) ||
+          (swapIndx !== null && rightChildValue > leftChildValue)
+        ) {
+          swapIndx = rightChildIndx;
+        }
+      }
+
+      if (swapIndx === null) break;
+      this.values[parentIndex] = this.values[swapIndx];
+      this.values[swapIndx] = parentValue;
+      parentIndex = swapIndx;
+    }
   }
 
   print() {
@@ -61,6 +76,10 @@ class MaxBinaryHeap {
 }
 
 const maxBinaryHeap = new MaxBinaryHeap([41, 39, 55, 18, 27, 12]);
-maxBinaryHeap.insert(100);
-// console.info(maxBinaryHeap);
+maxBinaryHeap.insert(31);
+maxBinaryHeap.print();
+maxBinaryHeap.extractMax();
+maxBinaryHeap.extractMax();
+const extractMax = maxBinaryHeap.extractMax();
+console.info(extractMax);
 maxBinaryHeap.print();
