@@ -1,5 +1,5 @@
 class HashTable {
-  constructor(size = 4) {
+  constructor(size = 50) {
     this.keyMap = new Array(size);
   }
 
@@ -21,12 +21,25 @@ class HashTable {
     }
     this.keyMap[index].push([key, value]);
   }
+
+  get(key) {
+    let index = this._hash(key);
+    if (this.keyMap[index]) {
+      for (let c = 0; c < this.keyMap[index].length; c++) {
+        if (this.keyMap[index][c][0] === key) {
+          return this.keyMap[index][c][1];
+        }
+      }
+    }
+    return undefined;
+  }
 }
 
 // testing
-let hashTable = new HashTable();
-hashTable.set(['I love', 'cats and dogs']);
-hashTable.set(['Home inspection', 'cement the chimney']);
-hashTable.set(['get it done', 'programming is fun']);
-hashTable.set(['cloud computing', 'conference']);
-console.log(hashTable);
+let hashTable = new HashTable(10);
+hashTable.set('I love', 'cats and dogs');
+hashTable.set('Home inspection', 'cement the chimney');
+hashTable.set('get it done', 'programming is fun');
+hashTable.set('cloud computing', 'conference');
+// console.log(hashTable);
+console.log(hashTable.get('get it done'));
