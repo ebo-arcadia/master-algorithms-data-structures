@@ -20,6 +20,17 @@ class Graph {
     this.adjacencyList[v1] = this.adjacencyList[v1].filter(v => v !== v2);
     this.adjacencyList[v2] = this.adjacencyList[v2].filter(v => v !== v1);
   }
+
+  removeVertex(vertex) {
+    for (let c = 0; c < this.adjacencyList.length; c++) {
+      while (this.adjacencyList[c].includes(vertex)) {
+        this.removeEdge(c, vertex);
+      }
+      this.adjacencyList[c] = this.adjacencyList[c].filter(
+        key => key !== vertex
+      );
+    }
+  }
 }
 
 let graph = new Graph();
@@ -28,5 +39,5 @@ graph.addVertex('Mexico');
 graph.addVertex('Iceland');
 graph.addEdge('UK', 'Mexico');
 graph.addEdge('UK', 'Berlin');
-graph.removeEdge('UK', 'Mexico');
+graph.removeVertex('Iceland');
 console.log(graph);
