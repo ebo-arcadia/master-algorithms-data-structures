@@ -17,19 +17,20 @@ class Graph {
   }
 
   removeEdge(v1, v2) {
-    this.adjacencyList[v1] = this.adjacencyList[v1].filter(v => v !== v2);
-    this.adjacencyList[v2] = this.adjacencyList[v2].filter(v => v !== v1);
+    if (this.adjacencyList[v1]) {
+      this.adjacencyList[v1] = this.adjacencyList[v1].filter(v => v !== v2);
+    }
+    if (this.adjacencyList[v2]) {
+      this.adjacencyList[v2] = this.adjacencyList[v2].filter(v => v !== v1);
+    }
   }
 
   removeVertex(vertex) {
-    for (let c = 0; c < this.adjacencyList.length; c++) {
-      while (this.adjacencyList[c].includes(vertex)) {
-        this.removeEdge(c, vertex);
-      }
-      this.adjacencyList[c] = this.adjacencyList[c].filter(
-        key => key !== vertex
-      );
+    while (this.adjacencyList[vertex].length) {
+      let vertexEdge = this.adjacencyList[vertex].pop();
+      this.removeEdge(vertex, vertexEdge);
     }
+    delete this.adjacencyList[vertex];
   }
 }
 
@@ -39,5 +40,7 @@ graph.addVertex('Mexico');
 graph.addVertex('Iceland');
 graph.addEdge('UK', 'Mexico');
 graph.addEdge('UK', 'Berlin');
-graph.removeVertex('Iceland');
+graph.addEdge('UK', 'Bali');
+graph.addEdge('Mexico', 'San Jose');
+graph.removeVertex('Mexico');
 console.log(graph);
