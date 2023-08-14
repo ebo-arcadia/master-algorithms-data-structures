@@ -32,6 +32,27 @@ class Graph {
     }
     delete this.adjacencyList[vertex];
   }
+
+  depthFirstTraverse() {
+    let traversedGraph = this;
+    helper(vertex) {
+      if (vertex) {
+        for (let j = 0; j < vertex.length; j++) {
+          if (vertex[j] && vertex[j] == vertex) {
+            vertex.removeEdge(vertex[j])
+          }
+        }
+      }
+    }
+
+    for (let i = 0; i < traversedGraph.length; i ++) {
+      helper(traversedGraph[i])
+    }
+
+    return traversedGraph;
+
+  }
+
 }
 
 let graph = new Graph();
