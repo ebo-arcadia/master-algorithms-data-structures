@@ -33,26 +33,23 @@ class Graph {
     delete this.adjacencyList[vertex];
   }
 
-  depthFirstTraverse() {
+  depthFirstTraverse(vertex) {
     let traversedGraph = this;
-    helper(vertex) {
-      if (vertex) {
-        for (let j = 0; j < vertex.length; j++) {
-          if (vertex[j] && vertex[j] == vertex) {
-            vertex.removeEdge(vertex[j])
-          }
-        }
-      }
+    let visitedVertex = {};
+
+    function helper(vertex) {
+      if (!vertex) return undefined;
+
+      visitedVertex[vertex] = true;
+      traversedGraph.push(vertex);
     }
 
-    for (let i = 0; i < traversedGraph.length; i ++) {
-      helper(traversedGraph[i])
+    if (!visitedVertex.includes(vertex)) {
+      helper(vertex);
     }
 
     return traversedGraph;
-
   }
-
 }
 
 let graph = new Graph();
@@ -65,3 +62,4 @@ graph.addEdge('UK', 'Bali');
 graph.addEdge('Mexico', 'San Jose');
 graph.removeVertex('Mexico');
 console.log(graph);
+graph.depthFirstTraverse();
