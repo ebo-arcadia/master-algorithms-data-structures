@@ -34,21 +34,24 @@ class Graph {
   }
 
   depthFirstTraverse(vertex) {
-    let traversedGraph = this;
+    let result = [];
     let visitedVertex = {};
+    let adjacencyList = this.adjacencyList;
 
     function helper(vertex) {
-      if (!vertex) return undefined;
+      if (!vertex) return null;
 
       visitedVertex[vertex] = true;
-      traversedGraph.push(vertex);
+      result.push(vertex);
     }
 
-    if (!visitedVertex.includes(vertex)) {
-      helper(vertex);
-    }
+    adjacencyList.forEach(vertex => {
+      if (!visitedVertex[vertex]) {
+        return helper(vertex);
+      }
+    });
 
-    return traversedGraph;
+    return result;
   }
 }
 
