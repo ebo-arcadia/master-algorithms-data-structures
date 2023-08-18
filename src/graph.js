@@ -33,23 +33,22 @@ class Graph {
     delete this.adjacencyList[vertex];
   }
 
-  depthFirstTraverse(vertex) {
+  depthFirstTraverse(head) {
     let result = [];
     let visitedVertex = {};
     let adjacencyList = this.adjacencyList;
 
-    function helper(vertex) {
+    (function helper(vertex) {
       if (!vertex) return null;
 
       visitedVertex[vertex] = true;
       result.push(vertex);
-    }
-
-    adjacencyList.forEach(vertex => {
-      if (!visitedVertex[vertex]) {
-        return helper(vertex);
-      }
-    });
+      adjacencyList.forEach(vertex => {
+        if (!visitedVertex[vertex]) {
+          return helper(vertex);
+        }
+      });
+    })(head);
 
     return result;
   }
