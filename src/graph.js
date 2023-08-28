@@ -1,3 +1,5 @@
+const {visit} = require('graphql');
+
 class Graph {
   constructor() {
     this.adjacencyList = {};
@@ -33,7 +35,7 @@ class Graph {
     delete this.adjacencyList[vertex];
   }
 
-  depthFirstTraverse(head) {
+  depthFirstTraverseRecursively(head) {
     let result = [];
     let visitedVertex = {};
     let adjacencyList = this.adjacencyList;
@@ -49,6 +51,26 @@ class Graph {
         }
       });
     })(head);
+
+    return result;
+  }
+
+  depthFirstTraverseIteratively(start) {
+    let stack = new Array();
+    let result = [];
+    let visited = {};
+
+    stack.push(start);
+    visited[start] = true;
+
+    while (stack.length !== 0) {
+      let neighbor = stack.pop();
+      if (neighbor && !visited[neighbor]) {
+        visited[neighbor] = true;
+        result.push(neighbor);
+        stack.push(stack);
+      }
+    }
 
     return result;
   }
@@ -71,4 +93,4 @@ g.addEdge('D', 'E');
 g.addEdge('D', 'F');
 g.addEdge('E', 'F');
 
-console.log(g.depthFirstTraverse('D'));
+console.log(g.depthFirstTraverseIteratively('A'));
