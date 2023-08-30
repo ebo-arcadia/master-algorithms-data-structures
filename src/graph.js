@@ -56,20 +56,22 @@ class Graph {
   }
 
   depthFirstTraverseIteratively(start) {
-    let stack = new Array();
-    let result = [];
-    let visited = {};
+    const stack = [start];
+    const result = [];
+    const visited = {};
 
-    stack.push(start);
     visited[start] = true;
 
-    while (stack.length !== 0) {
-      let neighbor = stack.pop();
-      if (neighbor && !visited[neighbor]) {
-        visited[neighbor] = true;
-        result.push(neighbor);
-        stack.push(stack);
-      }
+    while (stack.length) {
+      let currentVertex = stack.pop();
+      result.push(currentVertex);
+
+      this.adjacencyList[currentVertex].forEach(neighbor => {
+        if (!visited[neighbor]) {
+          visited[neighbor] = true;
+          stack.push(neighbor);
+        }
+      });
     }
 
     return result;
@@ -93,4 +95,4 @@ g.addEdge('D', 'E');
 g.addEdge('D', 'F');
 g.addEdge('E', 'F');
 
-console.log(g.depthFirstTraverseIteratively('A'));
+console.log(g.depthFirstTraverseIteratively('B'));
