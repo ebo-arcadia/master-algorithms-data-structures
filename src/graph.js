@@ -88,7 +88,7 @@ class Graph {
       let currentVertex = queue.shift();
       result.push(currentVertex);
 
-      this.adjacencyList.forEach(neighbor => {
+      this.adjacencyList[currentVertex].forEach(neighbor => {
         if (!visited[neighbor]) {
           visited[neighbor] = true;
           queue.push(neighbor);
@@ -117,4 +117,4 @@ g.addEdge('D', 'E');
 g.addEdge('D', 'F');
 g.addEdge('E', 'F');
 
-console.log(g.depthFirstTraverseIteratively('B'));
+console.log(g.breadthFirstTraverse('A'));
